@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | Aura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .gradient-text { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .blob { position: absolute; width: 600px; height: 600px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); filter: blur(100px); border-radius: 50%; z-index: -1; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden min-h-screen">
+    <div class="blob top-[-200px] left-[-200px]"></div>
+    <div class="blob bottom-[-200px] right-[-200px]"></div>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass border-b border-white/50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-black tracking-tighter gradient-text">Aura</a>
+            <div class="hidden md:flex space-x-8 font-bold text-slate-500 uppercase text-[10px] tracking-widest">
+                <a href="/secure/public" class="hover:text-indigo-600 transition">Explore Feed</a>
+                <a href="/secure/manageUser" class="hover:text-indigo-600 transition">My Content</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/auth/logout" class="px-5 py-2 bg-red-50 text-red-600 font-bold text-sm rounded-xl hover:bg-red-100 transition">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-12">
+        <!-- User Profile Card -->
+        <div class="glass p-8 rounded-[2.5rem] mb-12 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/50 shadow-xl shadow-indigo-50">
+            <div class="flex items-center gap-6">
+                <div class="w-24 h-24 bg-gradient-to-br overflow-hidden from-indigo-500 to-purple-600 rounded-[1.5rem] flex items-center justify-center text-white text-3xl font-black shadow-lg">
+                    <% if (user.profilePic) { %>
+                        <img src="<%= user.profilePic %>" class="w-full h-full object-cover">
+                    <% } else { %>
+                        <%= user.username[0].toUpperCase() %>
+                    <% } %>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 tracking-tight">@<%= user.username %></h2>
+                    <p class="text-slate-500 font-medium text-sm mb-2"><%= user.email %></p>
+                    <p class="text-slate-600 text-sm max-w-md leading-relaxed italic"><%= user.bio || 'Your bio is empty. Tell the world about yourself!' %></p>
+                    <span class="inline-block mt-3 px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest rounded-full border border-indigo-100">
+                        Verified <%= user.role %>
+                    </span>
+                </div>
+            </div>
+            <a href="/secure/editProfile" class="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition transform hover:-translate-y-1 shadow-xl shadow-slate-200">
+                Edit Profile Settings
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+            <div class="glass p-8 rounded-[2rem] border border-white/50 hover:shadow-2xl hover:shadow-indigo-100 transition duration-500 group">
+                <h3 class="text-xl font-black mb-4 text-indigo-600 tracking-tight">Create Story</h3>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Share a moment that lasts 24 hours. Let your friends see what you're up to.</p>
+                <a href="/story/create" class="inline-block w-full text-center bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 transform active:scale-95">Share Moment</a>
+            </div>
+            <div class="glass p-8 rounded-[2rem] border border-white/50 hover:shadow-2xl hover:shadow-purple-100 transition duration-500 group">
+                <h3 class="text-xl font-black mb-4 text-purple-600 tracking-tight">New Post</h3>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Upload a permanent memory to your feed. Share images or videos with rich captions.</p>
+                <a href="/post/create" class="inline-block w-full text-center bg-purple-600 text-white font-bold py-3 rounded-xl hover:bg-purple-700 transition shadow-lg shadow-purple-100 transform active:scale-95">Publish Feed</a>
+            </div>
+            <div class="glass p-8 rounded-[2rem] border border-white/50 hover:shadow-2xl hover:shadow-pink-100 transition duration-500 group">
+                <h3 class="text-xl font-black mb-4 text-pink-600 tracking-tight">Share Reel</h3>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Create short, engaging videos. Explore the next generation of visual storytelling.</p>
+                <a href="/reel/create" class="inline-block w-full text-center bg-pink-600 text-white font-bold py-3 rounded-xl hover:bg-pink-700 transition shadow-lg shadow-pink-100 transform active:scale-95">Upload Reel</a>
+            </div>
+        </div>
+
+        <section class="glass rounded-[2.5rem] border border-white/50 shadow-xl shadow-indigo-50 overflow-hidden">
+            <h2 class="text-xl font-black text-slate-900 p-8 border-b border-white/50 tracking-tight">Your Recent Transparency Logs</h2>
+            <div class="overflow-hidden">
+                <% if (typeof auditLogs !== 'undefined' && auditLogs.length > 0) { %>
+                    <ul class="divide-y divide-slate-50">
+                        <% auditLogs.forEach(log => { %>
+                            <li class="p-6 hover:bg-white/30 transition flex justify-between items-center">
+                                <span class="text-slate-700 font-medium italic">"<%= log.action %>"</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 font-mono"><%= new Date(log.createdAt).toLocaleString() %></span>
+                            </li>
+                        <% }) %>
+                    </ul>
+                <% } else { %>
+                    <div class="p-20 text-center text-slate-400 italic">
+                        <p>No activity recorded yet. Start your journey today!</p>
+                    </div>
+                <% } %>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-12 border-t border-slate-200 text-center">
+        <div class="text-xl font-black gradient-text mb-2">Aura</div>
+        <p class="text-slate-400 text-xs italic tracking-wide">© 2024 Aura. Your dashboard is secured by JWT.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Aura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .gradient-text { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .blob { position: absolute; width: 600px; height: 600px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%); filter: blur(100px); border-radius: 50%; z-index: -1; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+    <div class="blob top-[-200px] left-[-200px]"></div>
+    <div class="blob bottom-[-200px] right-[-200px]"></div>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-black tracking-tighter gradient-text">Aura</a>
+            <div class="hidden md:flex space-x-10 font-bold text-slate-500 uppercase text-xs tracking-widest">
+                <a href="/#features" class="hover:text-indigo-600 transition">Features</a>
+                <a href="/#workflow" class="hover:text-indigo-600 transition">Workflow</a>
+                <a href="/about" class="text-indigo-600 transition">About</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="/auth/login" class="px-5 py-2 text-indigo-600 font-bold text-sm hover:text-indigo-800 transition">Login</a>
+                <a href="/auth/register" class="px-6 py-2.5 bg-indigo-600 text-white font-bold text-sm rounded-full hover:bg-indigo-700 shadow-xl shadow-indigo-200 transition">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pt-24 pb-20">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block px-4 py-2 mb-8 text-xs font-bold tracking-widest text-indigo-600 uppercase bg-indigo-50 rounded-full border border-indigo-100 shadow-sm">
+                Next-Gen Social Engineering
+            </div>
+            <h1 class="text-6xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter leading-tight">
+                About <span class="gradient-text">Aura.</span>
+            </h1>
+            
+            <div class="glass p-10 rounded-[2.5rem] shadow-2xl shadow-indigo-50 text-left border border-white/50">
+                <p class="text-xl text-slate-600 leading-relaxed mb-8">
+                    Aura is a secure, high-performance platform designed to connect people through stories, posts, and reels. 
+                    Built with a focus on privacy and user experience, we ensure your data is protected while you share your life's moments.
+                </p>
+                <div class="h-px bg-slate-200 w-full mb-8"></div>
+                <p class="text-slate-500 leading-relaxed italic">
+                    Our architecture leverages high-concurrency database models and JWT-based security to provide a fast, reliable, and verified environment for modern creators.
+                </p>
+            </div>
+
+            <!-- Borrowed Features Section from Index -->
+            <div class="mt-20 text-center">
+                <h2 class="text-3xl font-black mb-12">Our Core Ecosystem</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                    <!-- Story -->
+                    <div class="p-8 glass rounded-[2rem] border border-white/50">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Ephemeral Stories</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">Moments that vanish after 24 hours, encouraging raw and authentic sharing.</p>
+                    </div>
+
+                    <!-- Post -->
+                    <div class="p-8 glass rounded-[2rem] border border-white/50">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Permanent Feed</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">A high-fidelity canvas for your permanent digital legacy and rich media.</p>
+                    </div>
+
+                    <!-- Reel -->
+                    <div class="p-8 glass rounded-[2rem] border border-white/50">
+                        <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center text-pink-600 mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Dynamic Reels</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">Immersive short-form video content optimized for mobile-first engagement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Borrowed Security Section from Index -->
+    <section class="py-20 bg-slate-900 text-white relative overflow-hidden mt-10">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl font-black mb-4">Integrity by Design.</h2>
+                    <p class="text-slate-400 max-w-lg">
+                        We don't just host content; we protect it. Every interaction on Aura is verified and logged to ensure a safe environment for all creators.
+                    </p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="px-8 py-4 bg-slate-800 rounded-2xl border border-slate-700 text-center">
+                        <div class="text-indigo-400 font-black text-2xl">JWT</div>
+                        <div class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Security</div>
+                    </div>
+                    <div class="px-8 py-4 bg-slate-800 rounded-2xl border border-slate-700 text-center">
+                        <div class="text-purple-400 font-black text-2xl">Audit</div>
+                        <div class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Logs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-6 py-20 text-center">
+        <a href="/" class="px-12 py-5 bg-slate-900 text-white font-extrabold rounded-2xl hover:bg-slate-800 transition transform hover:-translate-y-1 shadow-2xl">
+            ← Return to Dashboard
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-slate-200">
+        <div class="container mx-auto px-6 text-center">
+            <div class="text-3xl font-black gradient-text mb-8">Aura</div>
+            <p class="text-slate-400 text-sm font-medium tracking-wide italic">
+                © 2024 Aura. Engineered for the next generation of sharing.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

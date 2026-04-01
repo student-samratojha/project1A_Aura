@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Managed Content</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-indigo-600 p-4 text-white shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/secure/user" class="font-bold text-xl">My Dashboard</a>
+            <div class="space-x-4 text-sm font-medium">
+                <a href="/secure/editProfile" class="hover:underline">Edit Profile</a>
+                <a href="/auth/logout" class="bg-red-500 px-3 py-1 rounded">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto mt-8 p-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Manage My Shared Content</h1>
+
+        <% if (posts.length === 0 && storys.length === 0 && reels.length === 0) { %>
+            <div class="bg-white p-12 text-center rounded-xl border-2 border-dashed">
+                <p class="text-gray-400 text-lg mb-4">You haven't posted anything yet.</p>
+                <a href="/secure/user" class="text-indigo-600 font-bold hover:underline">Start Creating →</a>
+            </div>
+        <% } %>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% posts.forEach(post => { %>
+                <% if(!post.isDeleted) { %>
+                <div class="bg-white rounded-lg shadow-sm border p-4 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-indigo-500 uppercase tracking-tighter">Post</span>
+                        <p class="text-gray-700 mt-2 line-clamp-3"><%= post.content %></p>
+                        <% if(post.media) { %>
+                            <img src="<%= post.media %>" class="mt-3 rounded h-32 w-full object-cover">
+                        <% } %>
+                    </div>
+                    <div class="mt-4 pt-3 border-t flex justify-between items-center">
+                        <span class="text-xs text-gray-400"><%= new Date(post.createdAt).toLocaleDateString() %></span>
+                        <form action="/secure/deleteOwnContent" method="POST">
+                            <input type="hidden" name="contentType" value="post">
+                            <input type="hidden" name="contentId" value="<%= post._id %>">
+                            <button type="submit" class="text-red-500 hover:text-red-700 text-sm font-bold">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                <% } %>
+            <% }) %>
+
+            <% storys.forEach(story => { %>
+                <% if(!story.isDeleted) { %>
+                <div class="bg-gradient-to-br from-amber-50 to-white rounded-lg shadow-sm border border-amber-200 p-4 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-amber-500 uppercase tracking-tighter">Story</span>
+                        <p class="text-gray-700 mt-2 italic"><%= story.content %></p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-amber-100 flex justify-between items-center">
+                        <span class="text-xs text-gray-400">Expiring soon</span>
+                        <form action="/secure/deleteOwnContent" method="POST">
+                            <input type="hidden" name="contentType" value="story">
+                            <input type="hidden" name="contentId" value="<%= story._id %>">
+                            <button type="submit" class="text-red-500 hover:text-red-700 text-sm font-bold">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                <% } %>
+            <% }) %>
+
+            <!-- Reels can follow the same pattern here -->
+        </div>
+
+    </main>
+</body>
+</html>

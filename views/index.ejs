@@ -1,0 +1,182 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura | Connect, Share, Inspire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .gradient-text { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .blob { position: absolute; width: 600px; height: 600px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%); filter: blur(100px); border-radius: 50%; z-index: -1; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+    <div class="blob top-[-200px] left-[-200px]"></div>
+    <div class="blob bottom-[-200px] right-[-200px]"></div>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-black tracking-tighter gradient-text">Aura</a>
+            <div class="hidden md:flex space-x-10 font-bold text-slate-500 uppercase text-xs tracking-widest">
+                <a href="#features" class="hover:text-indigo-600 transition">Features</a>
+                <a href="#workflow" class="hover:text-indigo-600 transition">Workflow</a>
+                <a href="/about" class="hover:text-indigo-600 transition">About</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="/auth/login" class="px-5 py-2 text-indigo-600 font-bold text-sm hover:text-indigo-800 transition">Login</a>
+                <a href="/auth/register" class="px-6 py-2.5 bg-indigo-600 text-white font-bold text-sm rounded-full hover:bg-indigo-700 shadow-xl shadow-indigo-200 transition">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="container mx-auto px-6 pt-24 pb-20 text-center">
+        <div class="inline-block px-4 py-2 mb-8 text-xs font-bold tracking-widest text-indigo-600 uppercase bg-indigo-50 rounded-full border border-indigo-100 shadow-sm">
+            Experience High-Performance Social Media
+        </div>
+        <h1 class="text-7xl md:text-8xl font-black text-slate-900 mb-8 tracking-tighter leading-tight">
+            The social space for <br> <span class="gradient-text">creators.</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-xl text-slate-500 mb-12 leading-relaxed">
+            From fleeting 24-hour stories to viral reels and permanent feed memories. Connect securely on a platform built for speed and privacy.
+        </p>
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+            <a href="/auth/register" class="w-full md:w-auto px-12 py-5 bg-slate-900 text-white font-extrabold rounded-2xl hover:bg-slate-800 transition transform hover:-translate-y-1 shadow-2xl">Start Sharing Now</a>
+            <a href="#features" class="w-full md:w-auto px-12 py-5 glass text-slate-900 font-extrabold rounded-2xl hover:bg-white transition transform hover:-translate-y-1">View Features</a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="py-32 bg-white/40">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center mb-20">
+                <h2 class="text-4xl font-black mb-6">Built for every dimension.</h2>
+                <p class="text-slate-500 text-lg leading-relaxed">Whether it's a quick moment, a long-form story, or a short video, we have the perfect canvas for your creativity.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Story Feature -->
+                <div class="group p-10 glass rounded-[2.5rem] transition duration-500 hover:shadow-2xl hover:shadow-indigo-100">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg transition-transform group-hover:scale-110">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-4">Stories</h3>
+                    <p class="text-slate-500 leading-relaxed mb-6">Capture fleeting moments that last 24 hours. Perfect for spontaneous, real-time sharing without the pressure of perfection.</p>
+                    <div class="text-indigo-600 font-bold text-sm tracking-wide group-hover:underline">LEARN MORE →</div>
+                </div>
+
+                <!-- Post Feature -->
+                <div class="group p-10 glass rounded-[2.5rem] transition duration-500 hover:shadow-2xl hover:shadow-purple-100">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg transition-transform group-hover:scale-110">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-4">Permanent Posts</h3>
+                    <p class="text-slate-500 leading-relaxed mb-6">Your digital legacy. Share high-quality images and rich text captions to build a beautiful, permanent feed for your followers.</p>
+                    <div class="text-purple-600 font-bold text-sm tracking-wide group-hover:underline">LEARN MORE →</div>
+                </div>
+
+                <!-- Reel Feature -->
+                <div class="group p-10 glass rounded-[2.5rem] transition duration-500 hover:shadow-2xl hover:shadow-pink-100">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg transition-transform group-hover:scale-110">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-black mb-4">Immersive Reels</h3>
+                    <p class="text-slate-500 leading-relaxed mb-6">Create short-form video content that resonates. Our mobile-first player ensures a seamless, high-performance viewing experience.</p>
+                    <div class="text-pink-600 font-bold text-sm tracking-wide group-hover:underline">LEARN MORE →</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section id="workflow" class="py-32">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-20">
+                <div class="lg:w-1/2">
+                    <h2 class="text-5xl font-black mb-12 tracking-tight">The Journey <br><span class="gradient-text">of a Creator.</span></h2>
+                    
+                    <div class="space-y-10">
+                        <!-- Step 1 -->
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0 w-14 h-14 glass border-2 border-indigo-100 rounded-2xl flex items-center justify-center font-black text-indigo-600 shadow-xl">01</div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">Secure Identity</h4>
+                                <p class="text-slate-500 leading-relaxed">Register using our JWT-secured authentication system. Your data is protected by industry-standard encryption.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0 w-14 h-14 glass border-2 border-indigo-100 rounded-2xl flex items-center justify-center font-black text-indigo-600 shadow-xl">02</div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">Admin Verification</h4>
+                                <p class="text-slate-500 leading-relaxed">To ensure a safe and verified community, every user profile is audited and verified by our admin team before full access.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0 w-14 h-14 glass border-2 border-indigo-100 rounded-2xl flex items-center justify-center font-black text-indigo-600 shadow-xl">03</div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">Create & Engage</h4>
+                                <p class="text-slate-500 leading-relaxed">Use your dashboard to upload content. Interact with others via our optimized public feed with likes and comments.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-[3rem] blur-2xl opacity-20"></div>
+                        <div class="relative glass p-6 rounded-[3rem] shadow-2xl animate-float">
+                            <div class="bg-slate-900 rounded-[2rem] overflow-hidden aspect-video flex flex-col items-center justify-center">
+                                <div class="w-20 h-20 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-6"></div>
+                                <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">Loading Live Dashboard...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security & Audit Log -->
+    <section class="py-24 bg-slate-900 text-white overflow-hidden relative">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
+                <div>
+                    <h2 class="text-4xl font-black mb-4">Total Transparency.</h2>
+                    <p class="text-slate-400 text-lg max-w-xl">Every action is tracked via our advanced Audit Log system. We believe in providing you with full visibility over your account activity.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700">
+                        <div class="text-indigo-400 font-black text-3xl mb-1">256-bit</div>
+                        <div class="text-slate-500 text-xs font-bold uppercase tracking-widest">Encryption</div>
+                    </div>
+                    <div class="p-6 bg-slate-800 rounded-2xl border border-slate-700">
+                        <div class="text-purple-400 font-black text-3xl mb-1">Realtime</div>
+                        <div class="text-slate-500 text-xs font-bold uppercase tracking-widest">Auditing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-slate-200">
+        <div class="container mx-auto px-6 text-center">
+            <div class="text-3xl font-black gradient-text mb-8">Aura</div>
+            <div class="flex flex-wrap justify-center gap-10 text-slate-500 font-bold uppercase text-xs tracking-widest mb-12">
+                <a href="/" class="hover:text-indigo-600 transition">Home</a>
+                <a href="/about" class="hover:text-indigo-600 transition">About</a>
+                <a href="/auth/login" class="hover:text-indigo-600 transition">Login</a>
+                <a href="/auth/register" class="hover:text-indigo-600 transition">Sign Up</a>
+                <a href="#workflow" class="hover:text-indigo-600 transition">Workflow</a>
+            </div>
+            <p class="text-slate-400 text-sm font-medium tracking-wide italic">© 2024 Aura. Engineered for the next generation of sharing.</p>
+        </div>
+    </footer>
+</body>
+</html>

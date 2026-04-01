@@ -1,0 +1,209 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Content | Aura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .gradient-text { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .blob { position: absolute; width: 600px; height: 600px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); filter: blur(100px); border-radius: 50%; z-index: -1; }
+        .aspect-square { aspect-ratio: 1 / 1; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden min-h-screen">
+    <div class="blob top-[-200px] left-[-200px] opacity-50 md:opacity-100"></div>
+    <div class="blob bottom-[-200px] right-[-200px]"></div>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass border-b border-white/50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/secure/user" class="text-2xl font-black tracking-tighter gradient-text">Aura</a>
+            <div class="flex items-center gap-6">
+                <a href="/secure/user" class="text-slate-500 font-bold text-sm hover:text-indigo-600 transition">Dashboard</a>
+                <a href="/auth/logout" class="px-5 py-2 bg-red-50 text-red-600 font-bold text-sm rounded-xl hover:bg-red-100 transition">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        <header class="mb-12">
+            <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">Manage <span class="gradient-text">Content.</span></h1>
+            <p class="text-slate-500 mt-2 font-medium">Review and moderate your shared media.</p>
+        </header>
+
+        <!-- Stories Shelf (Instagram Style) -->
+        <section class="mb-12 md:mb-16">
+            <h2 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-pink-500"></span> Active Stories
+            </h2>
+            <div class="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
+                <% if (storys.length === 0) { %>
+                    <p class="text-sm text-slate-400 italic px-2">No active stories.</p>
+                <% } %>
+                <% storys.forEach(story => { %>
+                    <% if(!story.isDeleted) { %>
+                    <div class="flex-shrink-0 flex flex-col items-center gap-2 group mb-2">
+                        <div onclick="openStoryModal('<%= story.content %>', '<%= story.media %>')" class="w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 shadow-lg cursor-pointer transform hover:scale-105 transition duration-300">
+                            <div class="w-full h-full rounded-full bg-white p-1 overflow-hidden">
+                                <% if (story.media) { %>
+                                    <img src="<%= story.media %>" class="w-full h-full object-cover rounded-full">
+                                <% } else { %>
+                                    <div class="w-full h-full bg-slate-100 rounded-full flex items-center justify-center text-[10px] text-slate-400 italic px-1 text-center">Text</div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <form action="/secure/deleteOwnContent" method="POST">
+                            <input type="hidden" name="contentType" value="story">
+                            <input type="hidden" name="contentId" value="<%= story._id %>">
+                            <button type="submit" class="text-[10px] font-black uppercase text-red-500 hover:text-red-700 tracking-tighter transition">Delete</button>
+                        </form>
+                    </div>
+                    <% } %>
+                <% }) %>
+            </div>
+        </section>
+
+        <!-- Posts Grid (Instagram Style) -->
+        <section class="mb-12 md:mb-16">
+            <h2 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> Feed Posts
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-8">
+                <% if (posts.length === 0) { %>
+                    <p class="col-span-full py-12 text-center text-slate-400 italic glass rounded-3xl">No posts created yet.</p>
+                <% } %>
+                <% posts.forEach(post => { %>
+                    <% if(!post.isDeleted) { %>
+                    <div class="glass rounded-2xl md:rounded-[2rem] overflow-hidden group border border-white/50 hover:shadow-2xl transition duration-500">
+                        <div class="aspect-square bg-slate-100 overflow-hidden relative">
+                            <% if (post.media) { %>
+                                <img src="<%= post.media %>" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <% } else { %>
+                                <div class="w-full h-full flex items-center justify-center p-6 text-center text-xs text-slate-400 italic">
+                                    <%= post.content.substring(0, 50) %>...
+                                </div>
+                            <% } %>
+                            <div class="absolute inset-0 bg-black/40 opacity-100 sm:opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-4">
+                                <form action="/secure/deleteOwnContent" method="POST">
+                                    <input type="hidden" name="contentType" value="post">
+                                    <input type="hidden" name="contentId" value="<%= post._id %>">
+                                    <button type="submit" class="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                <% }) %>
+            </div>
+        </section>
+
+        <!-- Reels Section -->
+        <section>
+            <h2 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> Video Reels
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6">
+                <% if (reels.length === 0) { %>
+                    <p class="col-span-full py-12 text-center text-slate-400 italic glass rounded-3xl">No reels found.</p>
+                <% } %>
+                <% reels.forEach(reel => { %>
+                    <% if(!reel.isDeleted) { %>
+                    <div class="glass rounded-2xl md:rounded-[2rem] overflow-hidden aspect-[9/16] relative group border border-white/50 hover:shadow-2xl transition duration-500">
+                        <% if (reel.media && reel.media.length > 0) { %>
+                            <img src="<%= reel.media[0].url %>" class="w-full h-full object-cover">
+                        <% } else { %>
+                            <div class="w-full h-full bg-slate-900 flex items-center justify-center p-3">
+                                <p class="text-[10px] text-slate-500 italic text-center uppercase font-black"><%= reel.content %></p>
+                            </div>
+                        <% } %>
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
+                            <p class="text-white text-[10px] font-bold line-clamp-2 mb-3"><%= reel.content %></p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-white/60 text-[8px] font-black uppercase"><%= new Date(reel.createdAt).toLocaleDateString() %></span>
+                                <form action="/secure/deleteOwnContent" method="POST">
+                                    <input type="hidden" name="contentType" value="reels">
+                                    <input type="hidden" name="contentId" value="<%= reel._id %>">
+                                    <button type="submit" class="text-red-400 hover:text-red-500">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                <% }) %>
+            </div>
+        </section>
+
+        <% if (posts.length === 0 && storys.length === 0 && reels.length === 0) { %>
+            <div class="text-center py-20">
+                <p class="text-slate-400 mb-6 font-medium text-lg">Your creative space is empty.</p>
+                <a href="/secure/user" class="px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl hover:bg-indigo-700 shadow-xl shadow-indigo-100 transition inline-block transform hover:-translate-y-1">
+                    Start Your First Creation
+                </a>
+            </div>
+        <% } %>
+    </main>
+
+    <footer class="py-12 border-t border-slate-200 text-center">
+        <div class="text-xl font-black gradient-text mb-2">Aura</div>
+        <p class="text-slate-400 text-xs italic">Management Mode Secured by JWT</p>
+    </footer>
+
+ <!-- Story View Modal -->
+<div id="storyModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-md transition-all duration-300">
+    <div class="glass max-w-xs w-full rounded-[2rem] overflow-hidden relative border border-white/20 shadow-2xl">
+
+        <!-- Close Button -->
+        <button onclick="closeStoryModal()" class="absolute top-3 right-3 z-10 bg-black/60 text-white rounded-full p-2 hover:bg-red-500 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <!-- Story Media -->
+        <div id="modalMediaContainer" class="h-72 bg-slate-800 flex items-center justify-center overflow-hidden">
+        </div>
+
+        <!-- Story Text -->
+        <div class="p-4 bg-black">
+            <p id="modalContent" class="text-white text-sm font-medium text-center leading-relaxed"></p>
+        </div>
+    </div>
+</div>
+
+  <script>
+function openStoryModal(content, mediaUrl) {
+    const modal = document.getElementById('storyModal');
+    const mediaContainer = document.getElementById('modalMediaContainer');
+    const contentText = document.getElementById('modalContent');
+
+    contentText.innerText = content || 'No content';
+
+    mediaContainer.innerHTML = '';
+
+    if (mediaUrl && mediaUrl !== 'null' && mediaUrl !== '') {
+        mediaContainer.innerHTML = `<img src="${mediaUrl}" class="w-full h-full object-cover">`;
+    } else {
+        mediaContainer.innerHTML = `<div class="text-white/40 text-sm italic">No Media</div>`;
+    }
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeStoryModal() {
+    document.getElementById('storyModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+</script>
+</body>
+</html>

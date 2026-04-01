@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Feed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-white border-b sticky top-0 z-50 p-4 shadow-sm">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-black text-indigo-600">EXPLORE</h1>
+            <div class="space-x-6">
+                <a href="/secure/user" class="text-gray-600 hover:text-indigo-600 font-bold">Dashboard</a>
+                <a href="/secure/manageUser" class="text-gray-600 hover:text-indigo-600 font-bold">My Content</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto mt-8 p-4 max-w-2xl">
+        
+        <!-- Stories Row -->
+        <div class="flex space-x-4 overflow-x-auto pb-6 mb-6">
+            <% storys.forEach(story => { %>
+                <div class="flex-shrink-0 w-24 h-24 rounded-full border-2 border-pink-500 p-1">
+                    <div class="w-full h-full bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600 overflow-hidden text-center p-1">
+                        <%= story.user ? story.user.username : 'User' %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- Main Feed (Posts) -->
+        <div class="space-y-8">
+            <% posts.forEach(post => { %>
+                <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+                    <div class="p-4 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-700">
+                            <%= post.user ? post.user.username[0].toUpperCase() : '?' %>
+                        </div>
+                        <span class="font-bold text-gray-800"><%= post.user ? post.user.username : 'Deleted User' %></span>
+                    </div>
+                    <% if(post.media) { %>
+                        <img src="<%= post.media %>" class="w-full border-y" alt="Post media">
+                    <% } %>
+                    <div class="p-4">
+                        <p class="text-gray-700 leading-relaxed"><%= post.content %></p>
+                        <div class="mt-4 flex space-x-6">
+                            <button class="text-gray-500 hover:text-pink-500 flex items-center space-x-1"><span>Like</span></button>
+                            <button class="text-gray-500 hover:text-indigo-500 flex items-center space-x-1"><span>Comment</span></button>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore | Aura</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body {
+font-family: 'Plus Jakarta Sans', sans-serif;
+background:#f8fafc;
+}
+.glass {
+background: rgba(255,255,255,0.7);
+backdrop-filter: blur(12px);
+border:1px solid rgba(255,255,255,0.3);
+}
+.gradient-text {
+background: linear-gradient(135deg,#6366f1,#a855f7,#ec4899);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+</style>
+</head>
+
+<body class="min-h-screen">
+
+<nav class="sticky top-0 z-50 glass border-b">
+<div class="container mx-auto px-6 items-center py-4 flex justify-between">
+<a href="/" class="text-2xl font-black gradient-text">AURA</a>
+<a href="/secure/user?mode=manage" class="text-blue-500 text-sm font-semibold hover:text-blue-600 transition hover:underline">Back to Dashboard</a>
+</div>
+</nav>
+
+<main class="container mx-auto px-4 py-10 max-w-6xl">
+
+<h1 class="text-4xl font-black mb-10">Explore <span class="gradient-text">World</span></h1>
+
+<!-- STORIES -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-5 mb-14">
+<% storys.forEach(story => { 
+const storyLikes = likes.filter(l => l.story && l.story._id.toString() === story._id.toString());
+const storyComments = comments.filter(c => c.story && c.story._id.toString() === story._id.toString());
+%>
+
+<div class="glass rounded-3xl overflow-hidden shadow-lg">
+
+<% if(story.media && story.media.length > 0){ %>
+<img src="<%= story.media %>" class="w-full h-56 object-cover">
+<% } else { %>
+<div class="h-56 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white p-4">
+<%= story.content %>
+</div>
+<% } %>
+
+<div class="p-4">
+<p class="font-bold text-sm">@<%= story.user.username %></p>
+<p class="text-xs text-slate-500 mb-3"><%= story.content %></p>
+
+<div class="flex gap-4 mb-3">
+
+<form action="/story/like" method="POST">
+<input type="hidden" name="storyId" value="<%= story._id %>">
+<button class="text-pink-500 font-bold">❤️ <%= storyLikes.length %></button>
+</form>
+
+</div>
+
+<!-- Comments -->
+<div class="space-y-2 mb-3">
+<% storyComments.forEach(c => { %>
+<p class="text-xs bg-slate-50 rounded-lg px-2 py-1">
+<b>@<%= c.user.username %></b> <%= c.content %>
+</p>
+<% }) %>
+</div>
+
+<form action="/story/comment" method="POST" class="flex gap-2">
+<input type="hidden" name="storyId" value="<%= story._id %>">
+<input type="text" name="content" placeholder="comment..." class="flex-1 rounded-lg px-3 py-2 text-xs bg-slate-50">
+<button class="text-indigo-600 text-xs font-bold">Send</button>
+</form>
+
+</div>
+</div>
+<% }) %>
+</div>
+
+<!-- POSTS -->
+<div class="space-y-10">
+<% if(posts.length === 0){ %>
+<p class="text-center text-slate-400 w-[33%] text-sm italic
+mb-14 border-b-2 border-slate-200 pb-4">No posts found.</p>
+<% } %>
+<% posts.forEach(post => { 
+const postLikes = likes.filter(l => l.post && l.post._id.toString() === post._id.toString());
+const postComments = comments.filter(c => c.post && c.post._id.toString() === post._id.toString());
+%>
+
+<div class="glass rounded-3xl shadow-xl overflow-hidden">
+
+<div class="p-5">
+<p class="font-bold">@<%= post.user.username %></p>
+</div>
+
+<% if(post.media){ %>
+<img src="<%= post.media %>" class="w-full">
+<% } %>
+
+<div class="p-6">
+
+<p class="mb-4"><%= post.content %></p>
+
+<div class="flex gap-6 mb-4">
+
+<form action="/post/like" method="POST">
+<input type="hidden" name="postId" value="<%= post._id %>">
+<button class="text-pink-500 font-bold">❤️ <%= postLikes.length %></button>
+</form>
+
+</div>
+
+<!-- Comments -->
+<div class="space-y-2 mb-4">
+<% postComments.forEach(c => { %>
+<p class="text-xs bg-slate-50 px-3 py-2 rounded-xl">
+<b>@<%= c.user.username %></b> <%= c.content %>
+</p>
+<% }) %>
+</div>
+
+<form action="/post/comment" method="POST" class="flex gap-2">
+<input type="hidden" name="postId" value="<%= post._id %>">
+<input type="text" name="content" class="flex-1 rounded-xl px-3 py-2 bg-slate-50 text-sm" placeholder="Write comment">
+<button class="text-indigo-600 font-bold">Post</button>
+</form>
+
+</div>
+</div>
+
+<% }) %>
+</div>
+
+<!-- REELS -->
+<div class="grid md:grid-cols-3 gap-6 mt-14">
+
+    <% if(reels.length === 0){ %>
+        <p class="text-center text-slate-400 text-sm italic
+        mb-14 border-b-2 border-slate-200 pb-4">No reels found.</p>
+    <% } %>
+<% reels.forEach(reel => { 
+const reelLikes = likes.filter(l => l.reels && l.reels._id.toString() === reel._id.toString());
+const reelComments = comments.filter(c => c.reels && c.reels._id.toString() === reel._id.toString());
+%>
+
+<div class="glass rounded-3xl overflow-hidden">
+
+<% if(reel.media && reel.media.length > 0){ %>
+<img src="<%= reel.media[0].url %>" class="w-full h-80 object-cover">
+<% } else { %>
+<div class="h-80 bg-slate-900 text-white flex items-center justify-center p-4">
+<%= reel.content %>
+</div>
+<% } %>
+
+<div class="p-4">
+<p class="font-bold text-sm">@<%= reel.user.username %></p>
+<p class="text-xs mb-3"><%= reel.content %></p>
+
+<form action="/reel/like" method="POST" class="mb-3">
+<input type="hidden" name="reelId" value="<%= reel._id %>">
+<button class="text-pink-500 font-bold">❤️ <%= reelLikes.length %></button>
+</form>
+
+<div class="space-y-2 mb-3">
+<% reelComments.forEach(c => { %>
+<p class="text-xs bg-slate-50 rounded-lg px-2 py-1">
+<b>@<%= c.user.username %></b> <%= c.content %>
+</p>
+<% }) %>
+</div>
+
+<form action="/reel/comment" method="POST" class="flex gap-2">
+<input type="hidden" name="reelId" value="<%= reel._id %>">
+<input type="text" name="content" class="flex-1 rounded-lg px-2 py-2 bg-slate-50 text-xs" placeholder="Comment">
+<button class="text-indigo-600 text-xs font-bold">Post</button>
+</form>
+
+</div>
+</div>
+
+<% }) %>
+</div>
+
+</main>
+
+</body>
+</html>
